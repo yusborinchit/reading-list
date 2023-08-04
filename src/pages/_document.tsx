@@ -2,9 +2,9 @@ import { Head, Html, Main, NextScript } from "next/document";
 
 function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" className="scroll-smooth">
       <Head />
-      <body>
+      <body className="antialiased text-gray-900">
         <Main />
         <NextScript />
       </body>
