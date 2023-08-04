@@ -12,23 +12,27 @@ function Header() {
         </h1>
         <nav className="flex items-center">
           <ul className="flex gap-2">
-            <li className="capitalize flex items-center gap-2 bg-gradient-to-t from-gray-100 to-gray-50 rounded px-4 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors hover:from-gray-200 hover:to-gray-100">
-              <LucideIcon
-                name="book-copy"
-                width={21}
-                height={21}
-                strokeWidth={1.5}
-              />
-              <span>All books</span>
+            <li>
+              <button className="capitalize flex items-center gap-2 bg-gradient-to-t from-gray-100 to-gray-50 rounded px-4 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors hover:from-gray-200 hover:to-gray-100">
+                <LucideIcon
+                  name="book-copy"
+                  width={21}
+                  height={21}
+                  strokeWidth={1.5}
+                />
+                <span className="hidden sm:inline-block">All books</span>
+              </button>
             </li>
-            <li className="capitalize flex items-center gap-2 bg-gradient-to-t from-gray-100 to-gray-50 rounded px-4 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors hover:from-gray-200 hover:to-gray-100">
-              <LucideIcon
-                name="scroll-text"
-                width={21}
-                height={21}
-                strokeWidth={1.5}
-              />
-              <span>Reading list</span>
+            <li>
+              <button className="capitalize flex items-center gap-2 bg-gradient-to-t from-gray-100 to-gray-50 rounded px-4 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors hover:from-gray-200 hover:to-gray-100">
+                <LucideIcon
+                  name="scroll-text"
+                  width={21}
+                  height={21}
+                  strokeWidth={1.5}
+                />
+                <span className="hidden sm:inline-block">Reading list</span>
+              </button>
             </li>
           </ul>
         </nav>

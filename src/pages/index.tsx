@@ -1,9 +1,15 @@
 import BookCard from "@/components/book-card";
 import MainLayout from "@/components/main-layout";
 import { useBooks } from "@/hooks/use-books";
+import { getAllBooks } from "@/services/books";
+import { type Book } from "@/types";
 
-function Home() {
-  const { books } = useBooks();
+interface HomeProps {
+  initialBooks: Book[];
+}
+
+function Home({ initialBooks }: HomeProps) {
+  const { books } = useBooks({ initialBooks });
 
   return (
     <MainLayout title="YusborinBooks - Your online reading list ✅📚">
@@ -30,6 +36,11 @@ function Home() {
       </section>
     </MainLayout>
   );
+}
+
+export async function getServerSideProps() {
+  const initialBooks = await getAllBooks();
+  return { props: { initialBooks } };
 }
 
 export default Home;
