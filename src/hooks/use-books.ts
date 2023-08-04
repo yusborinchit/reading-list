@@ -5,11 +5,15 @@ export function useBooks({ initialBooks }: { initialBooks: Book[] }) {
   const [books, setBooks] = useState<Book[]>(initialBooks);
 
   useEffect(() => {
-    if (initialBooks.length === 0) return;
+    if (initialBooks.length > 0) return;
 
-    fetch("/api/books/")
-      .then((res) => res.json())
-      .then((data) => setBooks(data.books));
+    const getData = async () => {
+      const response = await fetch("/api/books/");
+      const data = await response.json();
+      setBooks(data.books);
+    };
+
+    getData();
   }, [initialBooks]);
 
   return { books };

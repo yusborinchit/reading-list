@@ -1,8 +1,9 @@
 import LucideIcon from "@/components/lucide-icon";
+import NavbarItem from "./nav-item";
 
 function Header() {
   return (
-    <header className="sticky top-0 left-0 z-20 bg-white border-b border-b-gray-200">
+    <header className="sticky top-0 left-0 z-40 bg-white border-b border-b-gray-200">
       <div className="container lg:max-w-screen-lg flex justify-between px-4 mx-auto">
         <h1 className="flex font-bold leading-[100%] py-4 -tracking-[1px] text-lg items-center gap-[2px]">
           <span>Yusborin</span>
@@ -12,28 +13,22 @@ function Header() {
         </h1>
         <nav className="flex items-center">
           <ul className="flex gap-2">
-            <li>
-              <button className="capitalize flex items-center gap-2 bg-gradient-to-t from-gray-100 to-gray-50 rounded px-4 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors hover:from-gray-200 hover:to-gray-100">
-                <LucideIcon
-                  name="book-copy"
-                  width={21}
-                  height={21}
-                  strokeWidth={1.5}
-                />
-                <span className="hidden sm:inline-block">All books</span>
-              </button>
-            </li>
-            <li>
-              <button className="capitalize flex items-center gap-2 bg-gradient-to-t from-gray-100 to-gray-50 rounded px-4 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors hover:from-gray-200 hover:to-gray-100">
-                <LucideIcon
-                  name="scroll-text"
-                  width={21}
-                  height={21}
-                  strokeWidth={1.5}
-                />
-                <span className="hidden sm:inline-block">Reading list</span>
-              </button>
-            </li>
+            <NavbarItem label="All books">
+              <LucideIcon
+                name="book-copy"
+                width={21}
+                height={21}
+                strokeWidth={1.5}
+              />
+            </NavbarItem>
+            <NavbarItem label="Reading list">
+              <LucideIcon
+                name="scroll-text"
+                width={21}
+                height={21}
+                strokeWidth={1.5}
+              />
+            </NavbarItem>
           </ul>
         </nav>
       </div>

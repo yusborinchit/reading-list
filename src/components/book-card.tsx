@@ -17,7 +17,7 @@ function BookCard({ book }: BookCardProps) {
   return (
     <article
       key={book.ISBN}
-      className="relative overflow-hidden transition-transform transform rounded hover:-translate-y-1 group"
+      className="relative overflow-hidden transition-transform transform rounded focus-within:-translate-y-1 hover:-translate-y-1 group"
     >
       <figure>
         <Image
