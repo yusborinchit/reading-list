@@ -1,89 +1,87 @@
-import BookCard from "@/components/book-card";
-import MainLayout from "@/components/main-layout";
-import { useBooks } from "@/hooks/use-books";
-import { getAllBooks } from "@/services/books";
-import { type Book } from "@/types";
+import MainLayout from "@/components/layouts/main-layout";
+import BookList from "@/components/sections/all-books";
+import ReadingList from "@/components/sections/reading-list";
+import { useLibrary } from "@/hooks/use-library";
+import { usePanelContext } from "@/hooks/use-panel-context";
 import Image from "next/image";
 
-interface HomeProps {
-  initialBooks: Book[];
-}
+function Home() {
+  const { panel } = usePanelContext();
 
-function Home({ initialBooks }: HomeProps) {
-  const { books } = useBooks({ initialBooks });
+  const {
+    filteredBooks,
+    readingList,
+    addToReadingList,
+    removeFromReadingList,
+  } = useLibrary();
 
   return (
     <MainLayout title="YusborinBooks - Your online reading list ✅📚">
-      <section className="py-44 before:z-30 relative overflow-x-hidden before:absolute before:right-0 before:top-0 before:w-1/4 before:h-full before:bg-gradient-to-l before:from-white before:to-transparent">
-        <div className="z-20">
+      <section className="relative overflow-x-hidden py-44">
+        <div className="z-20 flex flex-col gap-4">
           <h2 className="text-6xl leading-[0.9] font-black capitalize max-w-[200px]">
             Trending books
             <span className="text-transparent bg-gradient-to-tr from-blue-700 to-blue-500 bg-clip-text">
               .
             </span>
           </h2>
+          <p className="text-gray-500">At your fingertips.</p>
         </div>
-        <div className="absolute -z-10 top-1/2 items-center -right-[90%] flex gap-4 -translate-y-1/2 sm:-right-[40%] md:-right-[30%] lg:-right-[5%] xl:right-0">
-          <figure>
+        <div className="absolute -z-10 top-1/2 items-center -right-[100%] flex gap-4 -translate-y-1/2 sm:-right-[60%] md:-right-[40%] lg:-right-[5%] xl:right-0">
+          <figure className="w-[240px]">
             <Image
-              src={books[0].cover}
+              src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1566425108i/33.jpg"
+              priority
               width={180}
               height={270}
-              alt={`${books[0].title} - Book cover`}
-              className="object-cover rounded max-w-[230px] w-full aspect-[1/1.5]"
+              alt="El Señor de los Anillos - Book cover"
+              className="object-cover rounded w-full aspect-[1/1.5]"
             />
-            <figcaption className="sr-only">{books[0].title}</figcaption>
+            <figcaption className="sr-only">El Señor de los Anillos</figcaption>
           </figure>
-          <figure>
+          <figure className="w-[180px]">
             <Image
-              src={books[1].cover}
+              src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1273763400i/8189620.jpg"
+              priority
               width={180}
               height={270}
-              alt={`${books[1].title} - Book cover`}
-              className="object-cover rounded max-w-[180px] w-full aspect-[1/1.5]"
+              alt="Juego de Tronos - Book cover"
+              className="object-cover rounded w-full aspect-[1/1.5]"
             />
-            <figcaption className="sr-only">{books[1].title}</figcaption>
+            <figcaption className="sr-only">Juego de Tronos</figcaption>
           </figure>
-          <figure>
+          <figure className="w-[180px]">
             <Image
-              src={books[2].cover}
+              src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1550337333i/15868.jpg"
+              priority
               width={180}
               height={270}
-              alt={`${books[2].title} - Book cover`}
-              className="object-cover rounded max-w-[180px] w-full aspect-[1/1.5]"
+              alt="Harry Potter y la piedra filosofal - Book cover"
+              className="object-cover rounded w-full aspect-[1/1.5]"
             />
-            <figcaption className="sr-only">{books[2].title}</figcaption>
+            <figcaption className="sr-only">
+              Harry Potter y la piedra filosofal
+            </figcaption>
           </figure>
-        </div>
-      </section>
-      <section className="grid gap-6 flex-1">
-        <header className="flex items-center gap-2">
-          <h2 className="text-4xl font-black">
-            <span
-              aria-hidden
-              className="text-transparent bg-gradient-to-tr from-blue-700 to-blue-500 bg-clip-text"
-            >
-              #
-            </span>
-            <span> All books</span>
-            <span className="text-transparent bg-gradient-to-tr from-blue-700 to-blue-500 bg-clip-text">
-              .
-            </span>
-          </h2>
-        </header>
-        <div className="gap-4 grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))]">
-          {books.map((book) => (
-            <BookCard book={book} key={book.ISBN} />
-          ))}
         </div>
       </section>
+      {panel === "all-books" && (
+        <BookList
+          books={filteredBooks}
+          readingList={readingList}
+          addToReadingList={addToReadingList}
+          removeFromReadingList={removeFromReadingList}
+        />
+      )}
+      {panel === "reading-list" && (
+        <ReadingList
+          books={filteredBooks.filter((book) => readingList.has(book.ISBN))}
+          readingList={readingList}
+          removeFromReadingList={removeFromReadingList}
+        />
+      )}
     </MainLayout>
   );
-}
-
-export async function getServerSideProps() {
-  const initialBooks = await getAllBooks();
-  return { props: { initialBooks } };
 }
 
 export default Home;

@@ -1,3 +1,5 @@
+export type Panel = "all-books" | "reading-list";
+
 export interface Book {
   title: string;
   pages: number;

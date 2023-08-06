@@ -1,24 +1,27 @@
 import LucideIcon from "@/components/lucide-icon";
 import { type Book } from "@/types";
 import Image from "next/image";
-import { useState } from "react";
 
 interface BookCardProps {
   book: Book;
+  isBookmarked: boolean;
+  addToReadingList?: () => void;
+  removeFromReadingList: () => void;
 }
 
-function BookCard({ book }: BookCardProps) {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  const handleToggleBookmark = () => {
-    setIsBookmarked((prev) => !prev);
+function BookCard({
+  book,
+  isBookmarked,
+  addToReadingList,
+  removeFromReadingList,
+}: BookCardProps) {
+  const handleToggleReadingList = () => {
+    if (isBookmarked) return removeFromReadingList();
+    addToReadingList && addToReadingList();
   };
 
   return (
-    <article
-      key={book.ISBN}
-      className="relative overflow-hidden transition-transform transform rounded focus-within:-translate-y-1 hover:-translate-y-1 group"
-    >
+    <article key={book.ISBN} className="relative overflow-hidden rounded group">
       <figure>
         <Image
           src={book.cover}
@@ -38,7 +41,7 @@ function BookCard({ book }: BookCardProps) {
           aria-label="toggle bookmarked"
           aria-pressed={isBookmarked}
           data-pressed={isBookmarked}
-          onClick={handleToggleBookmark}
+          onClick={handleToggleReadingList}
           className="p-4 text-gray-300 data-[pressed=true]:text-blue-500 transition-colors hover:text-white data-[pressed=true]:hover:text-blue-600"
         >
           <LucideIcon
